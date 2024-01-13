@@ -1,10 +1,8 @@
 class GeolocationFacade
   def self.find_location(params)
     response =  GeolocationService.find_location(params)
-
     lat_long_object = build_lat_long(response)
     return lat_long_object
-    # require 'pry'; binding.pry
   end
 
   private
