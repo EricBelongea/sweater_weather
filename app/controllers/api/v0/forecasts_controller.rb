@@ -4,8 +4,7 @@ class Api::V0::ForecastsController < ApplicationController
   end
 
   def search
-    forecast = 
-    location = GeolocationFacade.find_location(params[:location])
-    # require 'pry'; binding.pry
+    forecast = WeatherFacade.find_forecast(params[:location])
+    require 'pry'; binding.pry
   end
 end

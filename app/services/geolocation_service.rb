@@ -10,7 +10,7 @@ class GeolocationService
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def self.find_location(params)
-    get_url("/geocoding/v1/address?location=#{params}")
+  def self.find_location(lat_lng)
+    get_url("/geocoding/v1/address?location=#{lat_lng}")
   end
 end
