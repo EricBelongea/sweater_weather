@@ -1,0 +1,3 @@
+class WeatherSerializer
+  
+end
