@@ -1,4 +1,4 @@
-class Api::v0::ForecastsController < ApplicationController
+class Api::V0::ForecastsController < ApplicationController
   def index
 
   end
