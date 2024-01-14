@@ -5,5 +5,8 @@ Rails.application.routes.draw do
       get '/forecast', to: 'forecasts#search'
       resources :sessions, only: :create
     end
+    namespace :v1 do
+      get '/munchies', to: 'munchies#search'
+    end
   end
 end
