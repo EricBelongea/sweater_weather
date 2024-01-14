@@ -58,3 +58,5 @@ group :development do
   # gem "spring"
 end
 
+
+gem "factory_bot", "~> 6.4"
