@@ -20,7 +20,7 @@ RSpec.describe "Users Create Request" do
   end
 
   describe '#sad-path' do
-    it 'matching passwords', :vcr do
+    it 'mismatching passwords', :vcr do
       user_request = {
       email: "mismatch@example.com",
       password: "password",
