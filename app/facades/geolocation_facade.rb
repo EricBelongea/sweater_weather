@@ -9,8 +9,8 @@ class GeolocationFacade
     response = GeolocationService.directions(origin, destination)
     raw_time = response[:route][:realTime]
     eta = format_time(raw_time)
-    require 'pry'; binding.pry
-    return eta
+    time = { eta: (format_time(raw_time)), hours:( raw_time / 3600) }
+    return time
   end
 
   private
@@ -23,7 +23,6 @@ class GeolocationFacade
   def self.format_time(time)
     hours = time / 3600
     minutes = time % 3600 / 60
-
     return "#{hours} hours #{minutes} minutes"
   end
 end
