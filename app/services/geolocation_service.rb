@@ -13,4 +13,8 @@ class GeolocationService
   def self.find_location(lat_lng)
     get_url("/geocoding/v1/address?location=#{lat_lng}")
   end
+
+  def self.directions(origin, destination)
+    get_url("directions/v2/route?from=#{origin}&to=#{destination}")
+  end
 end

@@ -5,10 +5,25 @@ class GeolocationFacade
     return lat_long_object
   end
 
+  def self.directions(origin, destination)
+    response = GeolocationService.directions(origin, destination)
+    raw_time = response[:route][:realTime]
+    eta = format_time(raw_time)
+    require 'pry'; binding.pry
+    return eta
+  end
+
   private
 
   def self.build_lat_long(response)
     latlng = response[:results].first[:locations].first[:latLng]
     object =  "#{latlng[:lat]}, #{ latlng[:lng]}"
+  end
+
+  def self.format_time(time)
+    hours = time / 3600
+    minutes = time % 3600 / 60
+
+    return "#{hours} hours #{minutes} minutes"
   end
 end
