@@ -6,10 +6,17 @@ class GeolocationFacade
 
   def self.directions(origin, destination)
     response = GeolocationService.directions(origin, destination)
-    raw_time = response[:route][:realTime]
-    eta = format_time(raw_time)
-    time = { eta: (format_time(raw_time)), hours:( raw_time / 3600) }
-    return time
+    if response[:info][:statuscode] == 402
+      {
+        status: 402,
+        error: response[:info][:messages].first
+      }
+    else
+      raw_time = response[:route][:realTime]
+      eta = format_time(raw_time)
+      time = { eta: (format_time(raw_time)), hours:( raw_time / 3600) }
+      return time
+    end
   end
 
   private

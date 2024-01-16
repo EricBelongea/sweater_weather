@@ -1,10 +1,14 @@
 class RoadTripFacade
   def self.road_trip(params)
     trip_time = GeolocationFacade.directions(params[:origin], params[:destination])
-    multi_day_response = WeatherFacade.find_multi_day(params[:destination])
-    space_and_time = linear_timeline(trip_time)
-    forecast = build_forecast(multi_day_response, space_and_time[:index])
-    build_road_trip(trip_time, forecast[space_and_time[:hour]], params)
+    if trip_time[:status] == 402
+      trip_time
+    else
+      multi_day_response = WeatherFacade.find_multi_day(params[:destination])
+      space_and_time = linear_timeline(trip_time)
+      forecast = build_forecast(multi_day_response, space_and_time[:index])
+      build_road_trip(trip_time, forecast[space_and_time[:hour]], params)
+    end
   end
 
   private 
