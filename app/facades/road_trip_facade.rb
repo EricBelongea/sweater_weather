@@ -2,8 +2,9 @@ class RoadTripFacade
   def self.road_trip(params)
     trip_time = GeolocationFacade.directions(params[:origin], params[:destination])
     multi_day_response = WeatherFacade.find_multi_day(params[:destination])
-    forecast = build_forecast(multi_day_response, trip_time)
-    build_road_trip(trip_time, forecast[(Time.now.hour + trip_time[:hours]) - 24], params)
+    space_and_time = linear_timeline(trip_time)
+    forecast = build_forecast(multi_day_response, space_and_time[:index])
+    build_road_trip(trip_time, forecast[space_and_time[:hour]], params)
   end
 
   private 
@@ -27,8 +28,8 @@ class RoadTripFacade
     }
   end
 
-  def self.build_forecast(multi_day_response, trip_time)
-    multi_day_response[:forecast][:forecastday][(Time.now.hour + trip_time[:hours]) / 24][:hour].map do |hour|
+  def self.build_forecast(multi_day_response, space_and_time)
+    multi_day_response[:forecast][:forecastday][space_and_time][:hour].map do |hour|
       {
         time: hour[:time],
         temp: hour[:temp_f],
@@ -36,5 +37,13 @@ class RoadTripFacade
 
       }
     end
+  end
+
+  def self.linear_timeline(trip_time)
+    total_hours = (Time.now.hour + trip_time[:hours])
+    {
+      index: total_hours / 24,
+      hour: total_hours % 24
+    }
   end
 end
