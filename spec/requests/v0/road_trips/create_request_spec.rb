@@ -25,7 +25,6 @@ RSpec.describe "Road Trip Controller" do
 
     response_body = JSON.parse(response.body, symbolize_names: true)
 
-    # require 'pry'; binding.pry
     expect(response_body).to be_a Hash
     expect(response_body[:data]).to be_a Hash
     expect(response_body[:data][:id]).to eq(nil)
@@ -40,5 +39,67 @@ RSpec.describe "Road Trip Controller" do
     expect(response_body[:data][:attributes][:weather_at_eta][:datetime]).to be_a String
     expect(response_body[:data][:attributes][:weather_at_eta][:condition]).to be_a String
     expect(response_body[:data][:attributes][:weather_at_eta][:temperature]).to be_a Float
+  end
+
+  describe '#sad-path road-trip' do
+    it 'no origin', :vcr do
+      road_trip = {
+        origin: "",
+        destination: "Chicago,IL",
+        api_key: @new_user.api_key
+      }
+
+      post api_v0_road_trip_index_path, params: road_trip
+      response_body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+      expect(response_body[:error]).to eq("All fields are required")
+    end
+
+    it 'no destination', :vcr do
+      road_trip = {
+        origin: "SLC, UT",
+        destination: "",
+        api_key: @new_user.api_key
+      }
+
+      post api_v0_road_trip_index_path, params: road_trip
+      response_body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+      expect(response_body[:error]).to eq("All fields are required")
+    end
+
+    it 'no key', :vcr do
+      road_trip = {
+        origin: "SLC, UT",
+        destination: "Chicago,IL",
+        api_key: ""
+      }
+
+      post api_v0_road_trip_index_path, params: road_trip
+      response_body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(401)
+      expect(response_body[:error]).to eq("Unauthorized")
+    end
+
+    it 'bad key', :vcr do
+      road_trip = {
+        origin: "SLC, UT",
+        destination: "Chicago,IL",
+        api_key: "FooBar"
+      }
+
+      post api_v0_road_trip_index_path, params: road_trip
+      response_body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(401)
+      expect(response_body[:error]).to eq("Unauthorized")
+    end
   end
 end

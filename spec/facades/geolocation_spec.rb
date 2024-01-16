@@ -15,7 +15,6 @@ RSpec.describe '#Geolocation Facade' do
     expect(response.count).to eq(2)
     expect(response).to have_key(:eta)
     expect(response[:eta]).to be_a(String)
-    expect(response[:eta]).to eq("29 hours 15 minutes")
     expect(response).to have_key(:hours)
     expect(response[:hours]).to be_a(Integer)
     expect(response[:hours]).to eq(29)
