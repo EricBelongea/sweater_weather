@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Weather Facade" do
-  it 'returns only what we want.', :vcr do
+  it 'find_forecast(location)', :vcr do
     response = WeatherFacade.find_forecast("Salt Lake City, UT")
 
     response_data = response[:data]
@@ -47,5 +47,27 @@ RSpec.describe "Weather Facade" do
       expect(hour[:conditions]).to be_a(String)
       expect(hour[:icon]).to be_a(String)
     end
+  end
+
+  it "find_multi_day(params)", :vcr do
+    response = WeatherFacade.find_multi_day("Salt Lake City, UT")
+    expect(response).to be_a(Hash)
+    expect(response.count).to eq(3)
+    expect(response).to have_key(:location)
+    expect(response[:location]).to be_a(Hash)
+    expect(response[:location].count).to eq(8)
+    expect(response).to have_key(:current)
+    expect(response[:current]).to be_a(Hash)
+    
+    
+    expect(response).to have_key(:forecast)
+    expect(response[:forecast][:forecastday].count).to eq(5)
+    expect(response[:forecast][:forecastday].first).to have_key(:date)
+    expect(response[:forecast][:forecastday].first).to have_key(:date_epoch)
+    expect(response[:forecast][:forecastday].first).to have_key(:day)
+    expect(response[:forecast][:forecastday].first).to have_key(:astro)
+    expect(response[:forecast][:forecastday].first).to have_key(:hour)
+    expect(response[:forecast][:forecastday].first[:hour]).to be_a(Array)
+    expect(response[:forecast][:forecastday].first[:hour].count).to eq(24)
   end
 end
