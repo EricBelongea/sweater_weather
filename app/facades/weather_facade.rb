@@ -4,7 +4,7 @@ class WeatherFacade
     response = WeatherService.find_forecast(lat_lng)
     build_forecast_response(response)
   end
-
+  
   def self.find_multi_day(params)
     WeatherService.find_multi_day(params)
   end
