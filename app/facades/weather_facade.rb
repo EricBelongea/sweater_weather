@@ -5,6 +5,10 @@ class WeatherFacade
     build_forecast_response(response)
   end
 
+  def self.find_multi_day(params)
+    WeatherService.find_multi_day(params)
+  end
+
   private
 
   def self.build_forecast_response(response)

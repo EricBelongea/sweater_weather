@@ -13,4 +13,8 @@ class WeatherService
   def self.find_forecast(params)
     get_url("/v1/forecast.json?q=#{params}")
   end
+
+  def self.find_multi_day(params)
+    get_url("/v1/forecast.json?q=#{params}&days=5")
+  end
 end
