@@ -2,9 +2,7 @@ class RoadTripFacade
   def self.road_trip(params)
     trip_time = GeolocationFacade.directions(params[:origin], params[:destination])
     forecast = WeatherFacade.find_forecast(params[:destination])
-
-    road_trip = build_road_trip(trip_time, forecast, params)
-    return road_trip
+    build_road_trip(trip_time, forecast, params)
   end
 
   private 

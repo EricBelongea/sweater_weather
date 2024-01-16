@@ -2,9 +2,7 @@ class WeatherFacade
   def self.find_forecast(params)
     lat_lng = GeolocationFacade.find_location(params)
     response = WeatherService.find_forecast(lat_lng)
-    
-    forecast = build_forecast_response(response)
-    return forecast
+    build_forecast_response(response)
   end
 
   private
