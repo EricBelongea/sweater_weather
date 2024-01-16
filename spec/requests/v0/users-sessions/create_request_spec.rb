@@ -9,10 +9,21 @@ RSpec.describe "Users Create Request" do
     }
 
     post api_v0_users_path, params: user_request
+    response_body = JSON.parse(response.body, symbolize_names: true)
     new_user = User.last
 
     expect(response).to be_successful
     expect(response.status).to eq(201)
+    expect(response_body).to be_a Hash
+    expect(response_body[:data][:id]).to_not eq(nil)
+    expect(response_body[:data][:type]).to eq("user")
+    expect(response_body[:data][:attributes]).to have_key(:email)
+    expect(response_body[:data][:attributes][:email]).to_not eq(nil)
+    expect(response_body[:data][:attributes]).to have_key(:api_key)
+    expect(response_body[:data][:attributes][:api_key]).to_not eq(nil)
+    expect(response_body[:data][:attributes]).to_not have_key(:password)
+    expect(response_body[:data][:attributes]).to_not have_key(:password_digest)
+
     expect(new_user).to be_instance_of User
     expect(new_user.email).to eq(user_request[:email])
     expect(new_user.api_key).to be_a(String)
