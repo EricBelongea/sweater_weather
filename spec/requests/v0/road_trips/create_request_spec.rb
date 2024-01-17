@@ -101,5 +101,21 @@ RSpec.describe "Road Trip Controller" do
       expect(response.status).to eq(401)
       expect(response_body[:error]).to eq("Unauthorized")
     end
+
+    it "trip over ocean", :vcr do
+      road_trip = {
+        origin: "SLC, UT",
+        destination: "Moscow, Russia",
+        api_key: @new_user.api_key
+      }
+
+      post api_v0_road_trip_index_path, params: road_trip
+      response_body = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to be_successful
+      expect(response.status).to eq(200)
+      expect(response_body[:status]).to eq(402)
+      expect(response_body[:error]).to eq("We are unable to route with the given locations.")
+    end
   end
 end
