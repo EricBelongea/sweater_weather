@@ -45,7 +45,7 @@ In your terminal:
 
 # Postman Suite <a href="https://www.postman.com/" title="Postman"> ![Alt text](image-2.png)</a>
 
-The entire Postman suite is linked [Here](https://www.postman.com/workspace/558c3e53-ddb4-4057-a00c-5e7fd3e90047/collection/31390544-82f83717-91b3-46b3-9647-2eae6e64861c). Follow along to test the returns from the external APIs and the reponses that you are getting from your localhost API calls. 
+The entire Postman suite is linked [Here](https://interstellar-crescent-503618.postman.co/workspace/New-Team-Workspace~c8f42d71-217e-4f30-9302-263b43126d38/collection/31390544-82f83717-91b3-46b3-9647-2eae6e64861c). Follow along to test the returns from the external APIs and the reponses that you are getting from your localhost API calls. 
 
 <br>
 
