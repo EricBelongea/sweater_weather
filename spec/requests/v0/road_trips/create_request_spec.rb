@@ -11,6 +11,7 @@ RSpec.describe "Road Trip Controller" do
     post api_v0_users_path, params: user_request
     @new_user = User.last
   end
+
   it "Can create a Road Trip", :vcr do
     road_trip = {
       origin: "Cincinatti,OH",
@@ -54,6 +55,7 @@ RSpec.describe "Road Trip Controller" do
 
       expect(response).to_not be_successful
       expect(response.status).to eq(400)
+      # expect(response[:status]).to eq(400)
       expect(response_body[:error]).to eq("All fields are required")
     end
 

@@ -8,6 +8,7 @@ class GeolocationFacade
     response = GeolocationService.directions(origin, destination)
     if response[:info][:statuscode] == 402
       {
+        # 402 == parment required, change HTTP status
         status: 402,
         error: response[:info][:messages].first
       }
